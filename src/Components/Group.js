@@ -3,46 +3,107 @@ import Checkbox from './Checkbox'
 import groupBy from 'lodash/groupBy'
 import { getItemChecked, setItemChecked } from '../store'
 
-const capitalize = lower => lower.replace(/^\w/, c => c.toUpperCase())
+const capitalize = (lower = '') => lower.replace(/^\w/, c => c.toUpperCase())
 
-class Group extends React.Component {
+class NoGroup extends React.Component {
   render() {
-    const { name, groupX, groupY, data } = this.props
+    const { name, data } = this.props
+    return (
+      <div key={`${name}-${this.props.id}`}>
+        {data.map((item, index) => {
+          const checked = getItemChecked(name, item.id)
 
-    const groupedByX = groupBy(data, groupX)
-    const groupedByXAndY = Object.keys(groupedByX).map(key => {
-      const groupedByNpc = groupBy(groupedByX[key], groupY)
+          return (
+            <Checkbox
+              key={`item-${index}`}
+              name={item.id}
+              label={item.name || item.item || JSON.stringify(item)}
+              checked={checked}
+              onChange={({ target }) => {
+                setItemChecked(name, item.id, !!target.checked)
+                this.forceUpdate()
+              }}
+            />
+          )
+        })}
+      </div>
+    )
+  }
+}
+
+class OneGroup extends React.Component {
+  render() {
+    const { name, groupAKey, data } = this.props
+    const groupedBy = groupBy(data, groupAKey)
+    return (
+      <div key={`${name}-${this.props.id}`}>
+        {Object.keys(groupedBy).map(groupKey => (
+          <div key={`${groupAKey}-${groupKey}`}>
+            <h2>
+              {capitalize(groupAKey)}: {groupKey}
+            </h2>
+
+            {groupedBy[groupKey].map((item, index) => {
+              const checked = getItemChecked(name, item.id)
+
+              return (
+                <Checkbox
+                  key={`item-${index}`}
+                  name={item.id}
+                  label={item.name || item.item}
+                  checked={checked}
+                  onChange={({ target }) => {
+                    setItemChecked(name, item.id, !!target.checked)
+                    this.forceUpdate()
+                  }}
+                />
+              )
+            })}
+          </div>
+        ))}
+      </div>
+    )
+  }
+}
+
+class TwoGroup extends React.Component {
+  render() {
+    const { name, groupAKey, groupBKey, data } = this.props
+
+    const groupedByA = groupBy(data, groupAKey)
+    const groupedByAAndB = Object.keys(groupedByA).map(key => {
+      const groupedByB = groupBy(groupedByA[key], groupBKey)
       return {
         name: key,
-        [groupX]: Object.keys(groupedByNpc).map(key => ({
+        [groupAKey]: Object.keys(groupedByB).map(key => ({
           name: key,
-          [groupY]: groupedByNpc[key],
+          [groupBKey]: groupedByB[key],
         })),
       }
     })
 
     return (
       <div key={`${name}-${this.props.id}`}>
-        {groupedByXAndY.map(x => (
-          <div key={`${groupX}-${x.name}`}>
+        {groupedByAAndB.map(groupingA => (
+          <div key={`${groupAKey}-${groupingA.name}`}>
             <h2>
-              {capitalize(groupX)}: {x.name}
+              {capitalize(groupAKey)}: {groupingA.name}
             </h2>
 
-            {x[groupX].map(y => (
-              <div key={`npc-${y.name}`}>
+            {groupingA[groupAKey].map(groupingB => (
+              <div key={`npc-${groupingB.name}`}>
                 <h4>
-                  {capitalize(groupY)}: {y.name}
+                  {capitalize(groupBKey)}: {groupingB.name}
                 </h4>
 
-                {y[groupY].map(item => {
+                {groupingB[groupBKey].map((item, index) => {
                   const checked = getItemChecked(name, item.id)
 
                   return (
                     <Checkbox
-                      key={`item-${item.name}`}
+                      key={`item-${index}`}
                       name={item.id}
-                      label={item.name}
+                      label={item.name || item.item}
                       checked={checked}
                       onChange={({ target }) => {
                         setItemChecked(name, item.id, !!target.checked)
@@ -58,6 +119,24 @@ class Group extends React.Component {
       </div>
     )
   }
+}
+
+const Group = ({ name, groupAKey, groupBKey, data }) => {
+  if (groupAKey && groupBKey) {
+    return (
+      <TwoGroup
+        name={name}
+        groupAKey={groupAKey}
+        groupBKey={groupBKey}
+        data={data}
+      />
+    )
+  }
+  if (groupAKey) {
+    return <OneGroup name={name} groupAKey={groupAKey} data={data} />
+  }
+
+  return <NoGroup name={name} data={data} />
 }
 
 export default Group
