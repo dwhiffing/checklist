@@ -17,6 +17,15 @@ const App = () => (
       <ul>
         <li>
           <Link to="/">Home</Link>
+          <button
+            style={{ float: 'right' }}
+            onClick={() => {
+              localStorage.removeItem('save')
+              location.reload()
+            }}
+          >
+            Delete save
+          </button>
         </li>
       </ul>
 
