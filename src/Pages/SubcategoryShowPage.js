@@ -1,15 +1,16 @@
 import React from 'react'
 import Subcategory from '../Components/Subcategory.js'
 import BasePage from '../Components/BasePage'
-import data from '../data/index.js'
+import flatten from 'lodash/flatten'
+import { getStore } from '../store.js'
 
 const SubcategoryPage = ({ match }) => {
-  const { subcategories } = data
   const id = +match.params.subcategoryId
-  const subcategory = subcategories.find(s => s.id === id)
+  const subcategories = flatten(Object.values(getStore().categories))
+  const subcategory = subcategories.find(s => s.id == id)
 
   return (
-    <BasePage name="SubcategoryPage" header={subcategory.name}>
+    <BasePage name="SubcategoryPage" header={subcategory.label}>
       {<Subcategory name={subcategory.name} id={id} />}
     </BasePage>
   )

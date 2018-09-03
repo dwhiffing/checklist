@@ -1,21 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const CategoryList = ({ categories, subcategories }) =>
-  categories.map(category => (
-    <div key={`category-${category.id}`}>
-      <h2>{category.name}</h2>
+const CategoryList = ({ categories }) =>
+  Object.keys(categories).map(categoryName => {
+    const subcategories = categories[categoryName]
 
-      {category.subcategories.map(id => {
-        const subcategory = subcategories.find(s => s.id === id)
+    return (
+      <div key={`category-${categoryName}`}>
+        <h2>{categoryName}</h2>
 
-        return (
-          <div key={`category-${id}`}>
-            <Link to={`/subcategories/${id}`}>{subcategory.name}</Link>
+        {subcategories.map(subcategory => (
+          <div key={`subcategory-${subcategory.id}`}>
+            <Link to={`/subcategories/${subcategory.id}`}>
+              {subcategory.label}
+            </Link>
           </div>
-        )
-      })}
-    </div>
-  ))
+        ))}
+      </div>
+    )
+  })
 
 export default CategoryList
