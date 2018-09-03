@@ -1,5 +1,6 @@
 import React from 'react'
-import Subcategory from '../Components/Subcategory/Subcategory.js'
+import Subcategory from '../Components/Subcategory.js'
+import BasePage from '../Components/BasePage'
 import data from '../data/index.js'
 
 const SubcategoryPage = ({ location }) => {
@@ -8,15 +9,9 @@ const SubcategoryPage = ({ location }) => {
   const subcategory = subcategories.find(s => s.id === id)
 
   return (
-    <div className="SubcategoryPage">
-      <header className="main-header">
-        <h1 className="main-header__title">{subcategory.name}</h1>
-      </header>
-
-      <section className="container">
-        {<Subcategory name={subcategory.name} id={id} />}
-      </section>
-    </div>
+    <BasePage name="SubcategoryPage" header={subcategory.name}>
+      {<Subcategory name={subcategory.name} id={id} />}
+    </BasePage>
   )
 }
 

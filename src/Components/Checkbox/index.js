@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './Checkbox.css'
 
-const Checkbox = ({ text, checked, onChange }) => (
+const Checkbox = ({ name, label, checked, onChange }) => (
   <div>
-    <span>{text}</span>
     <input name={name} type="checkbox" checked={checked} onChange={onChange} />
+    <span>{label}</span>
   </div>
 )
 
@@ -18,5 +18,9 @@ Checkbox.defaultProps = {
   checked: undefined,
   onChange() {},
 }
+
+export const Leve = ({ item, checked, onChange }) => (
+  <Checkbox name={item.id} label={item.name} />
+)
 
 export default Checkbox
