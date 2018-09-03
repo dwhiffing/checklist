@@ -1,14 +1,13 @@
 import React from 'react'
 import Checkbox from './Checkbox'
 import groupBy from 'lodash/groupBy'
-import { getStore } from '../store'
+import { getItemChecked, setItemChecked } from '../store'
 
 const capitalize = lower => lower.replace(/^\w/, c => c.toUpperCase())
 
 class Group extends React.Component {
   render() {
     const { name, groupX, groupY, data } = this.props
-    const store = getStore()
 
     const groupedByX = groupBy(data, groupX)
     const groupedByXAndY = Object.keys(groupedByX).map(key => {
@@ -36,19 +35,22 @@ class Group extends React.Component {
                   {capitalize(groupY)}: {y.name}
                 </h4>
 
-                {y[groupY].map(item => (
-                  <Checkbox
-                    key={`item-${item.name}`}
-                    name={item.id}
-                    label={item.name}
-                    checked={store[name][item.id]}
-                    onChange={({ target }) => {
-                      store[name][item.id] = !!target.checked
-                      localStorage.setItem('save', JSON.stringify(store))
-                      this.forceUpdate()
-                    }}
-                  />
-                ))}
+                {y[groupY].map(item => {
+                  const checked = getItemChecked(name, item.id)
+
+                  return (
+                    <Checkbox
+                      key={`item-${item.name}`}
+                      name={item.id}
+                      label={item.name}
+                      checked={checked}
+                      onChange={({ target }) => {
+                        setItemChecked(name, item.id, !!target.checked)
+                        this.forceUpdate()
+                      }}
+                    />
+                  )
+                })}
               </div>
             ))}
           </div>

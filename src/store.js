@@ -1,7 +1,5 @@
 let store = {
-  'Battlecraft & Grand Company Leves': [],
-  'Fieldcraft Leves': [],
-  'Tradecraft Leves': [],
+  progress: {},
 }
 
 export const setStore = save => {
@@ -11,3 +9,20 @@ export const setStore = save => {
 }
 
 export const getStore = () => store
+
+export const getItemChecked = (name, id) => {
+  if (!store.progress[name]) {
+    store.progress[name] = {}
+  }
+
+  return store.progress[name][id]
+}
+
+export const setItemChecked = (name, id, value) => {
+  if (!store.progress[name]) {
+    store.progress[name] = {}
+  }
+
+  store.progress[name][id] = value
+  localStorage.setItem('save', JSON.stringify(store))
+}
