@@ -3,9 +3,9 @@ import Subcategory from '../Components/Subcategory.js'
 import BasePage from '../Components/BasePage'
 import data from '../data/index.js'
 
-const SubcategoryPage = ({ location }) => {
+const SubcategoryPage = ({ match }) => {
   const { subcategories } = data
-  const id = +location.params.subcategoryId
+  const id = +match.params.subcategoryId
   const subcategory = subcategories.find(s => s.id === id)
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'simple-react-router'
+import { Link } from 'react-router-dom'
 
 const CategoryList = ({ categories, subcategories }) =>
   categories.map(category => (
@@ -11,7 +11,7 @@ const CategoryList = ({ categories, subcategories }) =>
 
         return (
           <div key={`category-${id}`}>
-            <Link href={`/subcategories/${id}`}>{subcategory.name}</Link>
+            <Link to={`/subcategories/${id}`}>{subcategory.name}</Link>
           </div>
         )
       })}
