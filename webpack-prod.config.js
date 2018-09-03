@@ -1,42 +1,48 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 module.exports = {
-  mode: "production",
-  entry: ["babel-polyfill", "./src/index.js"],
+  mode: 'production',
+  entry: ['babel-polyfill', './src/index.js'],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        options: { presets: ["env"], plugins: ["transform-class-properties"] }
+        loader: 'babel-loader',
+        options: { presets: ['env'], plugins: ['transform-class-properties'] },
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|pdf)/,
         exclude: /(node_modules|bower_components)/,
-        loader: "file-loader",
+        loader: 'file-loader',
         options: {
-          name: "/images/[name].[ext]"
-        }
-      }
-    ]
+          name: '/images/[name].[ext]',
+        },
+      },
+    ],
   },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
+  resolve: { extensions: ['*', '.js', '.jsx'] },
   output: {
-    path: path.resolve(__dirname, "dist/"),
-    filename: "bundle.js"
+    path: path.resolve(__dirname, 'dist/'),
+    filename: 'bundle.js',
   },
 
   plugins: [
-    new CleanWebpackPlugin(["dist"]),
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: "React Starter",
-      template: path.resolve(__dirname, "public/index.html")
-    })
-  ]
-};
+      title: 'React Starter',
+      template: path.resolve(__dirname, 'public/index.html'),
+    }),
+  ],
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty',
+  },
+}
