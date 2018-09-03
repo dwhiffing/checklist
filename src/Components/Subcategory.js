@@ -1,8 +1,7 @@
 import React from 'react'
 import Loader from './Loader'
-import gsjson from 'google-spreadsheet-to-json'
-
 import Group from './Group'
+import { getSubcategory } from '../store'
 
 const Leve = ({ name, data }) => (
   <Group name={name} groupX="type" groupY="npc" data={data} />
@@ -33,12 +32,9 @@ class Subcategory extends React.Component {
   }
 
   componentDidMount() {
-    gsjson({
-      spreadsheetId: '1EYbatKJiwKq0UPBRU6JeUUlbYasDQV9OHP2anjcXDJE',
-      worksheet: this.props.id,
-    }).then(result => {
-      this.setState({ data: result })
-    })
+    getSubcategory(this.props.id, this.props.name, data =>
+      this.setState({ data })
+    )
   }
 
   render() {
