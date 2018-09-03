@@ -2,6 +2,9 @@ import { hot } from 'react-hot-loader'
 import SimpleReactRouter from 'simple-react-router'
 import 'normalize.css'
 import './App.css'
+import { setStore } from './store'
+
+setStore(localStorage.getItem('save'))
 
 import HomePage from './Pages/HomePage'
 import SubcategoryShowPage from './Pages/SubcategoryShowPage'

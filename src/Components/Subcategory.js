@@ -4,24 +4,24 @@ import gsjson from 'google-spreadsheet-to-json'
 
 import Group from './Group'
 
-const Leve = ({ data }) => (
-  <Group name="leve" groupX="type" groupY="npc" data={data} />
+const Leve = ({ name, data }) => (
+  <Group name={name} groupX="type" groupY="npc" data={data} />
 )
 
-const Log = ({ data }) => (
-  <Group name="log" groupX="type" groupY="level" data={data} />
+const Log = ({ name, data }) => (
+  <Group name={name} groupX="type" groupY="level" data={data} />
 )
 
-const Fishing = ({ data }) => (
-  <Group name="log" groupX="level" groupY="zone" data={data} />
+const Fishing = ({ name, data }) => (
+  <Group name={name} groupX="level" groupY="zone" data={data} />
 )
 
-const Fish = ({ data }) => (
-  <Group name="log" groupX="type" groupY="zone" data={data} />
+const Fish = ({ name, data }) => (
+  <Group name={name} groupX="type" groupY="zone" data={data} />
 )
 
-const Sight = ({ data }) => (
-  <Group name="log" groupX="type" groupY="zone" data={data} />
+const Sight = ({ name, data }) => (
+  <Group name={name} groupX="type" groupY="zone" data={data} />
 )
 
 class Subcategory extends React.Component {
@@ -62,7 +62,11 @@ class Subcategory extends React.Component {
 
     return (
       <div key={`subcategory-${this.props.id}`}>
-        {data.length === 0 ? <Loader /> : <Component data={data} />}
+        {data.length === 0 ? (
+          <Loader />
+        ) : (
+          <Component name={this.props.name} data={data} />
+        )}
       </div>
     )
   }
