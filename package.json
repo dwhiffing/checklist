@@ -38,11 +38,13 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "fs": "0.0.1-security",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hot-loader": "^4.3.3",
+    "simple-react-router": "0.0.17",
     "webpack": "^4.12.0"
   }
 }
