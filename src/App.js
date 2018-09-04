@@ -8,8 +8,8 @@ import { setStore } from './store'
 
 setStore(localStorage.getItem('save'))
 
-import HomePage from './Pages/HomePage'
-import SubcategoryShowPage from './Pages/SubcategoryShowPage'
+import HomePage from './pages/HomePage'
+import SubcategoryShowPage from './pages/SubcategoryShowPage'
 
 const App = () => (
   <Router>

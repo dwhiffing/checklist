@@ -1,8 +1,8 @@
 import React from 'react'
-import Subcategory from '../Components/Subcategory.js'
-import BasePage from '../Components/BasePage'
 import flatten from 'lodash/flatten'
-import { getStore } from '../store.js'
+import BasePage from './BasePage'
+import { getStore } from '../store'
+import Subcategory from '../components/Subcategory'
 
 const SubcategoryPage = ({ match, history }) => {
   const id = +match.params.subcategoryId

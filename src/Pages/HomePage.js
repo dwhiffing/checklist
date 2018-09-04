@@ -1,8 +1,8 @@
 import React from 'react'
-import BasePage from '../Components/BasePage'
-import CategoryList from '../Components/CategoryList'
+import BasePage from './BasePage'
 import { getStore, setCategories } from '../store'
-import Loader from '../Components/Loader'
+import CategoryList from '../components/CategoryList'
+import Loader from '../components/Loader'
 
 class Home extends React.Component {
   constructor() {
